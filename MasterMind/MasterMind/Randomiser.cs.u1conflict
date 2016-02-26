@@ -1,0 +1,56 @@
+﻿using System;
+using System.Windows.Forms;
+
+namespace MasterMind
+{
+	class Randomiser//uitbreiding voor de standaardrandomiser die ervoor zorgt dat er geen duplicate values gegegeven worden
+	{
+		private int Start;
+
+		private int End;
+
+		private Random rnd = new Random();
+
+		private int[] AlreadyUsed;
+		private int Index = 0;
+
+		public Randomiser(int start, int end)
+		{
+			this.Start = start;
+			this.End = end + 1;
+			AlreadyUsed = new int[end];
+		}//randomiser
+
+		public int GetRandom()
+		{
+			int tmp;
+			do
+			{
+				tmp = rnd.Next(Start, End);
+				//MessageBox.Show("tmp = " + tmp.ToString());
+				MessageBox.Show(Index.ToString() + End.ToString());
+			}
+			while (FindOccurence(AlreadyUsed, tmp) == true && Index != End);
+
+			AlreadyUsed[Index] = tmp;
+			Index++;
+			return tmp;
+			
+		}//GetRandom
+
+		private bool FindOccurence(int[] haystack, int needle)
+		{
+			for (int i = 0; i <= Index; i++)
+			{
+				//MessageBox.Show("i = " + i.ToString()) + "hs = " + haystack[i].ToString() + Environment.NewLine + "ndl = " + needle.ToString());
+				if (haystack[i] == needle)
+				{
+					return true;
+				}//if
+			}//for	
+
+			return false;			
+		}//FindOccurence
+
+	}//Randomiser
+}//MasterMind
